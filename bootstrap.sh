@@ -8,12 +8,12 @@ echo "[TASK 2] Stop and Disable firewall"
 systemctl disable --now ufw >/dev/null 2>&1
 
 echo "[TASK 3] Enable and Load Kernel modules"
-cat >>/etc/modules-load.d/containerd.conf<<EOF
-overlay
-br_netfilter
-EOF
-modprobe overlay
-modprobe br_netfilter
+# cat >>/etc/modules-load.d/containerd.conf<<EOF
+# overlay
+# br_netfilter
+# EOF
+# modprobe overlay
+# modprobe br_netfilter
 
 echo "[TASK 4] Add Kernel settings"
 cat >>/etc/sysctl.d/kubernetes.conf<<EOF
