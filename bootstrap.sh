@@ -8,12 +8,12 @@ echo "[TASK 2] Stop and Disable firewall"
 systemctl disable --now ufw >/dev/null 2>&1
 
 echo "[TASK 3] Enable and Load Kernel modules"
-# cat >>/etc/modules-load.d/containerd.conf<<EOF
-# overlay
-# br_netfilter
-# EOF
-# modprobe overlay
-# modprobe br_netfilter
+cat >>/etc/modules-load.d/containerd.conf<<EOF
+overlay
+br_netfilter
+EOF
+modprobe overlay
+modprobe br_netfilter
 
 echo "[TASK 4] Add Kernel settings"
 cat >>/etc/sysctl.d/kubernetes.conf<<EOF
@@ -33,11 +33,12 @@ systemctl restart containerd
 systemctl enable containerd >/dev/null 2>&1
 
 echo "[TASK 6] Add apt repo for kubernetes"
-apt install -qq -y git curl wget zsh
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - >/dev/null 2>&1
+apt install -qq -y git curl zsh gnupg2 software-properties-common >/dev/null 2>&1
+curl -s -N https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - >/dev/null 2>&1
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" >/dev/null 2>&1
 
 echo "[TASK 7] Install Kubernetes components (kubeadm, kubelet and kubectl)"
+apt update -qq >/dev/null 2>&1
 apt install -qq -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00 >/dev/null 2>&1
 
 echo "[TASK 8] Enable ssh password authentication"
