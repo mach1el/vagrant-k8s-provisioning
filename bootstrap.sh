@@ -26,13 +26,14 @@ sysctl --system >/dev/null 2>&1
 echo "[TASK 5] Install containerd runtime"
 apt update -qq >/dev/null 2>&1
 apt install -qq -y containerd apt-transport-https >/dev/null 2>&1
-mkdir /etc/containerd
+mkdir -p /etc/containerd
 containerd config default > /etc/containerd/config.toml
 sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 systemctl restart containerd
 systemctl enable containerd >/dev/null 2>&1
 
 echo "[TASK 6] Add apt repo for kubernetes"
+apt install -qq -y git curl wget zsh
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - >/dev/null 2>&1
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" >/dev/null 2>&1
 
