@@ -3,7 +3,7 @@
 
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 
-VAGRANT_BOX         = "debian/bullseye64"
+VAGRANT_BOX         = "mich43l/debian11"
 CPUS_MASTER_NODE    = 2
 CPUS_WORKER_NODE    = 1
 MEMORY_MASTER_NODE  = 2048
