@@ -18,11 +18,16 @@ Vagrant.configure(2) do |config|
   config.vm.define "kmaster" do |node|
 
     node.vm.box               = VAGRANT_BOX
-    node.vm.box_version     = VAGRANT_BOX_VER
+    node.vm.box_version       = VAGRANT_BOX_VER
+    node.disksize.size        = '20GB'
     node.vm.box_check_update  = false
     node.vm.hostname          = "kmaster.demo"
 
+    node.vm.synced_folder "/home/michael/Projects", "/root/Projects"
+    node.vm.synced_folder "/home/michael/Projects", "/home/vagrant/Projects"
+    
     node.vm.network "private_network", ip: "10.25.1.10"
+    node.vm.network "public_network", ip: "192.168.0.100",bridge: "wlan0"
 
     node.vm.provider :virtualbox do |v|
       v.name    = "kmaster"
@@ -39,11 +44,13 @@ Vagrant.configure(2) do |config|
     config.vm.define "kworker#{i}" do |node|
 
       node.vm.box               = VAGRANT_BOX
-      node.vm.box_version     = VAGRANT_BOX_VER
+      node.vm.box_version       = VAGRANT_BOX_VER
+      node.disksize.size        = '20GB'
       node.vm.box_check_update  = false
       node.vm.hostname          = "kworker#{i}.demo"
 
       node.vm.network "private_network", ip: "10.25.1.1#{i}"
+      node.vm.network "public_network", ip: "192.168.0.10#{i}",bridge: "wlan0"
 
       node.vm.provider :virtualbox do |v|
         v.name    = "kworker#{i}"
