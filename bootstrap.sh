@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KUBE_VERSION=1.23.0
+KUBE_VERSION=1.24.0
 
 echo "[TASK 1] Disable and turn off SWAP"
 sed -i '/swap/d' /etc/fstab
