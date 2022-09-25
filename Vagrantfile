@@ -4,7 +4,7 @@
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 
 VAGRANT_BOX         = "mich43l/debian11"
-VAGRANT_BOX_VER     = "1.1"
+VAGRANT_BOX_VER     = "1.2"
 CPUS_MASTER_NODE    = 2
 CPUS_WORKER_NODE    = 1
 MEMORY_MASTER_NODE  = 2048
@@ -18,7 +18,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "kmaster" do |node|
 
     node.vm.box               = VAGRANT_BOX
-    node.vm.box_version     = VAGRANT_BOX_VER
+    node.vm.box_version       = VAGRANT_BOX_VER
     node.vm.box_check_update  = false
     node.vm.hostname          = "kmaster.demo"
 
