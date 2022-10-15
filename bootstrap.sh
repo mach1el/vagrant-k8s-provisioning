@@ -1,6 +1,8 @@
 #!/bin/bash
 
-KUBE_VERSION=1.23.0
+echo "[ZSH] Update latest version"
+sudo -H -u vagrant zsh -ic "omz update -y" >/dev/null 2>&1
+zsh -ic "omz update" >/dev/null 2>&1
 
 echo "[TASK 1] Disable and turn off SWAP"
 sed -i '/swap/d' /etc/fstab
@@ -26,11 +28,8 @@ EOF
 sysctl --system >/dev/null 2>&1
 
 echo "[TASK 5] Install and Configure containerd"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 apt update >/dev/null 2>&1 && apt install -yqq containerd >/dev/null 2>&1
-containerd config default | tee /etc/containerd/config.toml >/dev/null 2>&1
-sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml >/dev/null 2>&1
+wget -O /etc/containerd/config.toml https://gist.githubusercontent.com/mach1el/35d457d624395c85ac63ce73b7337f86/raw/a753c3c34d56f2c30150aa38a29028e84a889061/config.toml >/dev/null 2>&1
 systemctl restart containerd >/dev/null 2>&1
 systemctl enable containerd >/dev/null 2>&1
 
@@ -38,7 +37,7 @@ echo "[TASK 6] Install Kubernetes components (kubeadm, kubelet and kubectl)"
 curl -s -N https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - >/dev/null 2>&1
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" >/dev/null 2>&1
 apt update -qq >/dev/null 2>&1
-apt install -qq -y kubelet=${KUBE_VERSION}-00 kubeadm=${KUBE_VERSION}-00 kubectl=${KUBE_VERSION}-00 kubernetes-cni=0.8.7-00 >/dev/null 2>&1
+apt install -qq -y kubelet kubeadm kubectl >/dev/null 2>&1
 
 echo "[TASK 7] Enable ssh password authentication"
 sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
