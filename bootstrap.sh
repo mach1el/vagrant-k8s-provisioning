@@ -51,7 +51,7 @@ EOF
 
 echo "[TASK 9] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
-10.25.1.10   kmaster.demo     kmaster
-10.25.1.11   kworker1.demo    kworker1
-10.25.1.12   kworker2.demo    kworker2
+10.98.1.10   kmaster.demo     kmaster
+10.98.1.11   kworker1.demo    kworker1
+10.98.1.12   kworker2.demo    kworker2
 EOF
