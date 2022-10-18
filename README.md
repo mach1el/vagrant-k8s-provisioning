@@ -11,6 +11,6 @@ Launch K8S cluster in VirtualBox
 
 |  Nodes   |      IP       | Hostname  |
 |----------|:-------------:|----------:|
-| Master   |  10.25.1.10   | kmaster   |
-| Woker 1  |  10.25.1.11   | kworker2  |
-| Woker 2  |  10.25.1.12   | kworker2  |
+| Master   |  10.98.1.10   | kmaster   |
+| Woker 1  |  10.98.1.11   | kworker2  |
+| Woker 2  |  10.98.1.12   | kworker2  |
