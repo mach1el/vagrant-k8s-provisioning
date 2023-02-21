@@ -23,6 +23,8 @@ Vagrant.configure(2) do |config|
     node.vm.hostname         = "kmaster.demo"
 
     node.vm.network "private_network", ip: "10.98.1.10"
+    node.vm.network "public_network", ip: "192.168.1.70",bridge: "wlan0"
+
     node.vm.provider :virtualbox do |v|
       v.name    = "kmaster"
       v.memory  = MEMORY_MASTER_NODE
@@ -43,6 +45,8 @@ Vagrant.configure(2) do |config|
       node.vm.hostname         = "kworker#{i}.demo"
 
       node.vm.network "private_network", ip: "10.98.1.1#{i}"
+      node.vm.network "public_network", ip: "192.168.1.7#{i}",bridge: "wlan0"
+
       node.vm.provider :virtualbox do |v|
         v.name    = "kworker#{i}"
         v.memory  = MEMORY_WORKER_NODE
